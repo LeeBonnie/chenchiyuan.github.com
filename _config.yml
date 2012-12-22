@@ -3,8 +3,8 @@
 # ----------------------- #
 
 url: http://chenchiyuan.github.com
-title: 我的博客 
-subtitle: 博客 
+title: Shadow 
+subtitle:  
 author: 陈驰远
 simple_search: http://google.com/search
 description:
@@ -45,7 +45,7 @@ titlecase: true       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides: [asides/weibo.html, asides/recent_posts.html, asides/github.html, ] 
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -57,13 +57,21 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Weibo
+weibo_uid: 2422799105
+weibo_verifier: f4d2c316
+weibo_fansline: 2
+weibo_show: true
+weibo_pic: true
+weibo_skin: 1
+
 # Github repositories
 github_user: chenchiyuan
 github_repo_count: 5
 github_show_profile_link: true
 github_skip_forks: true
 
-# Twitter
+#<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=2422799105&verifier=f4d2c316&dpc=1"></iframe> Twitter
 twitter_user:
 twitter_tweet_count: 4
 twitter_show_replies: false

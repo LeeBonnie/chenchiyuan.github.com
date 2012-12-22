@@ -3,8 +3,7 @@ layout: post
 title: "用Sublime搭建你自己的Django IDE"
 date: 2012-12-22 17:27
 comments: true
-categories: [sublime]
-tags: [sublime]
+categories: ["Sublime", ]
 ---
 
 ## 为什么使用Sublime?
