@@ -24,7 +24,7 @@ For Humans是kennethreitz的追求。短短两个单词，却让我想到了好�
 ## tablib是啥子？
 >Tablib is a format-agnostic tabular dataset library, written in Python.
 
-Tablib是一个数据类，如果你使用他的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(**注意，可没说有XML哈**)等格式。
+Tablib是kennethreitz比较早的作品。它是一个数据类，如果你使用它的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(**注意，可没说有XML哈**)等格式。
 
 
 用代码说话更清楚：

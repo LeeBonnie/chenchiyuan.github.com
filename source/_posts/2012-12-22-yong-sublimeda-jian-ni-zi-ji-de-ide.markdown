@@ -107,7 +107,7 @@ $ ctags -R -f ~/.tags $VIRTUALENVS/$PROJECT
 递归的将virtualenv下的project目录建立索引。
 
 
-#### Zencoding是编写前端代码的最优雅方式
+#### 4. Zencoding是编写前端代码的最优雅方式
 现在Zencoding改名为Emmet。只需要用Packages Control安装Emmet即可。
 
 
