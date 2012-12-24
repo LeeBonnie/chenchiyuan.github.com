@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sublime | Shadow]]></title>
   <link href="http://chenchiyuan.github.com/blog/categories/sublime/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T00:11:47+08:00</updated>
+  <updated>2012-12-25T00:21:46+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -98,7 +98,7 @@ $ ctags -R -f ~/.tags $VIRTUALENVS/$PROJECT
 </code>
 递归的将virtualenv下的project目录建立索引。</p>
 
-<h4>Zencoding是编写前端代码的最优雅方式</h4>
+<h4>4. Zencoding是编写前端代码的最优雅方式</h4>
 
 <p>现在Zencoding改名为Emmet。只需要用Packages Control安装Emmet即可。</p>
 

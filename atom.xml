@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T00:11:47+08:00</updated>
+  <updated>2012-12-25T00:21:46+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -36,7 +36,7 @@
 
 <blockquote><p>Tablib is a format-agnostic tabular dataset library, written in Python.</p></blockquote>
 
-<p>Tablib是一个数据类，如果你使用他的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(<strong>注意，可没说有XML哈</strong>)等格式。</p>
+<p>Tablib是kennethreitz比较早的作品。它是一个数据类，如果你使用它的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(<strong>注意，可没说有XML哈</strong>)等格式。</p>
 
 <p>用代码说话更清楚：</p>
 
@@ -232,7 +232,7 @@
 
 <p>递归的将virtualenv下的project目录建立索引。</p>
 
-<h4>Zencoding是编写前端代码的最优雅方式</h4>
+<h4>4. Zencoding是编写前端代码的最优雅方式</h4>
 
 <p>现在Zencoding改名为Emmet。只需要用Packages Control安装Emmet即可。</p>
 
