@@ -65,6 +65,9 @@ weibo_show: true
 weibo_pic: true
 weibo_skin: 1
 
+# duoshuo
+duoshuo_name: chiyuan
+
 # Github repositories
 github_user: chenchiyuan
 github_repo_count: 5

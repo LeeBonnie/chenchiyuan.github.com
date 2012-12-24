@@ -1,0 +1,9 @@
+Searching 53 files for "recent post"
+
+/Users/shadow/Projects/octopress/source/_includes/asides/recent_posts.html:
+    1  <section>
+    2:   <h1>最新博文</h1>
+    3    <ul id="recent_posts">
+    4      {% for post in site.posts limit: site.recent_posts %}
+
+1 match in 1 file
