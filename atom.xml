@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-24T23:35:14+08:00</updated>
+  <updated>2012-12-25T00:11:47+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -12,6 +12,136 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[数据导出从此无忧:tablib]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/"/>
+    <updated>2012-12-24T23:39:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>最近很喜欢在Github上搜搜项目，特别是那些短小，优美，强大的项目，不仅用起来很贴心，读起源码来也是说不出的舒服。今天时间不早了，写一篇小短文算是开个头。</p>
+
+<!--more-->
+
+
+<h2>推荐一个人先</h2>
+
+<p>如果你玩Python, 如果同时你也玩Github。建议你关注下这个人<a href="https://github.com/kennethreitz">kennethreitz</a>。介绍他只需要用一句话He wrote requests。
+如果你不知道<a href="https://github.com/kennethreitz/requests">requests</a>是什么，好吧，点进去看看，基本你用一次，以后就不会用其他的网络库了。</p>
+
+<p>For Humans是kennethreitz的追求。短短两个单词，却让我想到了好多东西。程序员就应该像他那样，做出这些看起来美，用起来美，真正能服务于人的东西。扯多了，先说正题。</p>
+
+<h2>tablib是啥子？</h2>
+
+<blockquote><p>Tablib is a format-agnostic tabular dataset library, written in Python.</p></blockquote>
+
+<p>Tablib是一个数据类，如果你使用他的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(<strong>注意，可没说有XML哈</strong>)等格式。</p>
+
+<p>用代码说话更清楚：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import tablib
+</span><span class='line'>headers = ('first_name', 'last_name')
+</span><span class='line'>
+</span><span class='line'>data = [
+</span><span class='line'>    ('John', 'Adams'),
+</span><span class='line'>    ('George', 'Washington')
+</span><span class='line'>]
+</span><span class='line'>
+</span><span class='line'>data = tablib.Dataset(*data, headers=headers)
+</span><span class='line'>&gt;&gt;&gt; data.append(('Henry', 'Ford'))
+</span><span class='line'>&gt;&gt;&gt; data.append_col((90, 67, 83), header='age')
+</span><span class='line'>print data[:2]
+</span><span class='line'>[('John', 'Adams', 90), ('George', 'Washington', 67)]
+</span><span class='line'>&gt;&gt;&gt; print data['first_name']
+</span><span class='line'>['John', 'George', 'Henry']
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Json</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print data.json
+</span><span class='line'>[
+</span><span class='line'>  {
+</span><span class='line'>    "last_name": "Adams",
+</span><span class='line'>    "age": 90,
+</span><span class='line'>    "first_name": "John"
+</span><span class='line'>  },
+</span><span class='line'>  {
+</span><span class='line'>    "last_name": "Ford",
+</span><span class='line'>    "age": 83,
+</span><span class='line'>    "first_name": "Henry"
+</span><span class='line'>  }
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>CSV</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print data.csv
+</span><span class='line'>first_name,last_name,age
+</span><span class='line'>John,Adams,90
+</span><span class='line'>Henry,Ford,83</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Excel</strong>(话说我也写过，和这个tablib一对比，果断删掉重写= =)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; open('people.xls', 'wb').write(data.xls)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>它能做什么？</h2>
+
+<p>我见到这货第一反应是：如果我写了一层Django Model和tablib的Adapter之后，以后数据的导出就再也不费功夫了，Model的数据都可以自行的输出成理想的格式，太美妙了。瞬间有了实现的冲动。冷静的去github上瞅了一眼，我想到的大家几年前就想到了= =详情请看<a href="https://github.com/joshourisman/django-tablib">django-tablib传送门</a></p>
+
+<p>用处不限于此，如果你经常需要将输入导入导出，建议你好好想想这货可以怎么帮你。这提高的效率可不是一点点。</p>
+
+<h2>安装</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install tablib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ easy_install tablib</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用Sublime搭建你自己的Django IDE]]></title>

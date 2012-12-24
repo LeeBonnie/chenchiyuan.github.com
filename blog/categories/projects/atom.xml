@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: projects | Shadow]]></title>
+  <link href="http://chenchiyuan.github.com/blog/categories/projects/atom.xml" rel="self"/>
+  <link href="http://chenchiyuan.github.com/"/>
+  <updated>2012-12-25T00:11:47+08:00</updated>
+  <id>http://chenchiyuan.github.com/</id>
+  <author>
+    <name><![CDATA[陈驰远]]></name>
+    <email><![CDATA[chenchiyuan03@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[数据导出从此无忧:tablib]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/"/>
+    <updated>2012-12-24T23:39:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>最近很喜欢在Github上搜搜项目，特别是那些短小，优美，强大的项目，不仅用起来很贴心，读起源码来也是说不出的舒服。今天时间不早了，写一篇小短文算是开个头。</p>
+
+<!--more-->
+
+
+<h2>推荐一个人先</h2>
+
+<p>如果你玩Python, 如果同时你也玩Github。建议你关注下这个人<a href="https://github.com/kennethreitz">kennethreitz</a>。介绍他只需要用一句话He wrote requests。
+如果你不知道<a href="https://github.com/kennethreitz/requests">requests</a>是什么，好吧，点进去看看，基本你用一次，以后就不会用其他的网络库了。</p>
+
+<p>For Humans是kennethreitz的追求。短短两个单词，却让我想到了好多东西。程序员就应该像他那样，做出这些看起来美，用起来美，真正能服务于人的东西。扯多了，先说正题。</p>
+
+<h2>tablib是啥子？</h2>
+
+<blockquote><p>Tablib is a format-agnostic tabular dataset library, written in Python.</p></blockquote>
+
+<p>Tablib是一个数据类，如果你使用他的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(<strong>注意，可没说有XML哈</strong>)等格式。</p>
+
+<p>用代码说话更清楚：
+```
+import tablib
+headers = ('first_name', 'last_name')</p>
+
+<p>data = [</p>
+
+<pre><code>('John', 'Adams'),
+('George', 'Washington')
+</code></pre>
+
+<p>]</p>
+
+<p>data = tablib.Dataset(*data, headers=headers)</p>
+
+<blockquote><blockquote><blockquote><p>data.append(('Henry', 'Ford'))
+data.append_col((90, 67, 83), header='age')
+print data[:2]
+[('John', 'Adams', 90), ('George', 'Washington', 67)]
+print data['first_name']
+['John', 'George', 'Henry']</p></blockquote></blockquote></blockquote>
+
+<p><code>
+**Json**
+</code></p>
+
+<blockquote><blockquote><blockquote><p>print data.json
+[
+  {</p>
+
+<pre><code>"last_name": "Adams",
+"age": 90,
+"first_name": "John"
+</code></pre>
+
+<p>  },
+  {</p>
+
+<pre><code>"last_name": "Ford",
+"age": 83,
+"first_name": "Henry"
+</code></pre>
+
+<p>  }
+]
+<code>
+**CSV**
+</code>
+print data.csv
+first_name,last_name,age
+John,Adams,90
+Henry,Ford,83
+<code>
+**Excel**(话说我也写过，和这个tablib一对比，果断删掉重写= =)
+</code>
+open('people.xls', 'wb').write(data.xls)
+```</p></blockquote></blockquote></blockquote>
+
+<h2>它能做什么？</h2>
+
+<p>我见到这货第一反应是：如果我写了一层Django Model和tablib的Adapter之后，以后数据的导出就再也不费功夫了，Model的数据都可以自行的输出成理想的格式，太美妙了。瞬间有了实现的冲动。冷静的去github上瞅了一眼，我想到的大家几年前就想到了= =详情请看<a href="https://github.com/joshourisman/django-tablib">django-tablib传送门</a></p>
+
+<p>用处不限于此，如果你经常需要将输入导入导出，建议你好好想想这货可以怎么帮你。这提高的效率可不是一点点。</p>
+
+<h2>安装</h2>
+
+<p><code>
+$ pip install tablib
+</code></p>
+
+<p>或者
+<code>
+$ easy_install tablib
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

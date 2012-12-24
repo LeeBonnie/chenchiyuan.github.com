@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>数据导出从此无忧:tablib - Shadow</title>
+  <meta name="author" content="陈驰远">
+
+  
+  <meta name="description" content="前言 最近很喜欢在Github上搜搜项目，特别是那些短小，优美，强大的项目，不仅用起来很贴心，读起源码来也是说不出的舒服。今天时间不早了，写一篇小短文算是开个头。 推荐一个人先 如果你玩Python, 如果同时你也玩Github。建议你关注下这个人kennethreitz。介绍他只需要用一句话He &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Shadow" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Shadow</a></h1>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:chenchiyuan.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">博客</a></li>
+  <li><a href="/blog/categories/projects">Github探秘</a></li>
+  <li><a href="/blog/categories/tricks">好玩的技巧</a></li>
+  <li><a href="/blog/categories/sublime">Sublime</a></li>
+  <li><a href="/blog/categories/patterns">设计模式</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">数据导出从此无忧:tablib</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-24T23:39:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>前言</h2>
+
+<p>最近很喜欢在Github上搜搜项目，特别是那些短小，优美，强大的项目，不仅用起来很贴心，读起源码来也是说不出的舒服。今天时间不早了，写一篇小短文算是开个头。</p>
+
+<!--more-->
+
+
+<h2>推荐一个人先</h2>
+
+<p>如果你玩Python, 如果同时你也玩Github。建议你关注下这个人<a href="https://github.com/kennethreitz">kennethreitz</a>。介绍他只需要用一句话He wrote requests。
+如果你不知道<a href="https://github.com/kennethreitz/requests">requests</a>是什么，好吧，点进去看看，基本你用一次，以后就不会用其他的网络库了。</p>
+
+<p>For Humans是kennethreitz的追求。短短两个单词，却让我想到了好多东西。程序员就应该像他那样，做出这些看起来美，用起来美，真正能服务于人的东西。扯多了，先说正题。</p>
+
+<h2>tablib是啥子？</h2>
+
+<blockquote><p>Tablib is a format-agnostic tabular dataset library, written in Python.</p></blockquote>
+
+<p>Tablib是一个数据类，如果你使用他的格式定义数据，你可以直接将数据导出成XLSX, XLS, ODS, JSON, YAML, CSV, TSV, and HTML(<strong>注意，可没说有XML哈</strong>)等格式。</p>
+
+<p>用代码说话更清楚：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import tablib
+</span><span class='line'>headers = ('first_name', 'last_name')
+</span><span class='line'>
+</span><span class='line'>data = [
+</span><span class='line'>    ('John', 'Adams'),
+</span><span class='line'>    ('George', 'Washington')
+</span><span class='line'>]
+</span><span class='line'>
+</span><span class='line'>data = tablib.Dataset(*data, headers=headers)
+</span><span class='line'>&gt;&gt;&gt; data.append(('Henry', 'Ford'))
+</span><span class='line'>&gt;&gt;&gt; data.append_col((90, 67, 83), header='age')
+</span><span class='line'>print data[:2]
+</span><span class='line'>[('John', 'Adams', 90), ('George', 'Washington', 67)]
+</span><span class='line'>&gt;&gt;&gt; print data['first_name']
+</span><span class='line'>['John', 'George', 'Henry']
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Json</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print data.json
+</span><span class='line'>[
+</span><span class='line'>  {
+</span><span class='line'>    "last_name": "Adams",
+</span><span class='line'>    "age": 90,
+</span><span class='line'>    "first_name": "John"
+</span><span class='line'>  },
+</span><span class='line'>  {
+</span><span class='line'>    "last_name": "Ford",
+</span><span class='line'>    "age": 83,
+</span><span class='line'>    "first_name": "Henry"
+</span><span class='line'>  }
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>CSV</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print data.csv
+</span><span class='line'>first_name,last_name,age
+</span><span class='line'>John,Adams,90
+</span><span class='line'>Henry,Ford,83</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Excel</strong>(话说我也写过，和这个tablib一对比，果断删掉重写= =)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; open('people.xls', 'wb').write(data.xls)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>它能做什么？</h2>
+
+<p>我见到这货第一反应是：如果我写了一层Django Model和tablib的Adapter之后，以后数据的导出就再也不费功夫了，Model的数据都可以自行的输出成理想的格式，太美妙了。瞬间有了实现的冲动。冷静的去github上瞅了一眼，我想到的大家几年前就想到了= =详情请看<a href="https://github.com/joshourisman/django-tablib">django-tablib传送门</a></p>
+
+<p>用处不限于此，如果你经常需要将输入导入导出，建议你好好想想这货可以怎么帮你。这提高的效率可不是一点点。</p>
+
+<h2>安装</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install tablib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ easy_install tablib</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">陈驰远</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-24T23:39:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/projects/'>projects</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/" data-via="" data-counturl="http://chenchiyuan.github.com/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2012/12/22/yong-sublimeda-jian-ni-zi-ji-de-ide/" title="Previous Post: 用Sublime搭建你自己的Django IDE">&laquo; 用Sublime搭建你自己的Django IDE</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section id="comment">
+    <h1>发表评论</h1>
+    
+<!-- Duoshuo Comment BEGIN -->
+  <div class="ds-thread"></div>
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"chiyuan"};
+  (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo Comment END -->
+
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+<section>
+  <h1>新浪微博</h1>
+    <ul id="weibo">
+	        <li>
+		      <iframe 
+			              width="100%" 
+				              height="550" 
+					              class="share_self" 
+						              frameborder="0" 
+							              scrolling="no" 
+								              src="http://widget.weibo.com/weiboshow/index.php?width=0&height=550&ptype=1&speed=0&skin=&isTitle=0&noborder=1&isWeibo=1&isFans=&uid=2422799105&verifier=f4d2c316">
+									            </iframe>
+										        </li>
+											  </ul>
+											  </section>
+											  
+<section>
+  <h1>最新博文</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/24/shu-ju-dao-chu-cong-ci-wu-you-tablib/">数据导出从此无忧:tablib</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/22/yong-sublimeda-jian-ni-zi-ji-de-ide/">用Sublime搭建你自己的Django IDE</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github最新项目</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/chenchiyuan">@chenchiyuan</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'chenchiyuan',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 陈驰远 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
