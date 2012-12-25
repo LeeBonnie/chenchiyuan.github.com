@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T23:41:28+08:00</updated>
+  <updated>2012-12-25T23:46:58+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -110,6 +110,7 @@
 <span class='line-number'>35</span>
 <span class='line-number'>36</span>
 <span class='line-number'>37</span>
+<span class='line-number'>38</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>def example():
 </span><span class='line'>  def before_saying(self):
 </span><span class='line'>    print("I know your name %s" % self.name)
@@ -130,8 +131,9 @@
 </span><span class='line'>    def __i_know_you(self):
 </span><span class='line'>      print("I know you guy %s " % self.name)
 </span><span class='line'>
-</span><span class='line'>    @func_section(before_chain=[__i_know_you, before_saying, before_saving],
-</span><span class='line'>      after_chain=[after_saving, done])
+</span><span class='line'>    @func_section(before_chain=[__i_know_you, 
+</span><span class='line'>        before_saying, before_saving], 
+</span><span class='line'>        after_chain=[after_saving, done])
 </span><span class='line'>    def save(self):
 </span><span class='line'>      print("Save name %s " % self.name)
 </span><span class='line'>      return self.name

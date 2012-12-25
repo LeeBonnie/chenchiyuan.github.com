@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tricks | Shadow]]></title>
   <link href="http://chenchiyuan.github.com/blog/categories/tricks/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T23:41:28+08:00</updated>
+  <updated>2012-12-25T23:46:58+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -86,8 +86,9 @@ def example():
 def __i_know_you(self):
   print("I know you guy %s " % self.name)
 
-@func_section(before_chain=[__i_know_you, before_saying, before_saving],
-  after_chain=[after_saving, done])
+@func_section(before_chain=[__i_know_you, 
+    before_saying, before_saving], 
+    after_chain=[after_saving, done])
 def save(self):
   print("Save name %s " % self.name)
   return self.name
