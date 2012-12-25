@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T00:21:46+08:00</updated>
+  <updated>2012-12-25T23:41:28+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -12,6 +12,200 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[面向切面编程(AOP)]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/25/qie-mian-bian-cheng/"/>
+    <updated>2012-12-25T22:46:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/25/qie-mian-bian-cheng</id>
+    <content type="html"><![CDATA[<h2>什么是面向切面编程？</h2>
+
+<p>面向切面编程, Aspect Oriented Programming(AOP)。主要实现的是将业务逻辑处理过程以切面为维度进行提取，它所面对的是处理过程中的某个步骤或阶段，以获得逻辑过程中各部分之间低耦合性的隔离效果。也就是说，<strong>在不修改函数A的前提下</strong>，在函数A前后插入业务逻辑B, C, D..</p>
+
+<!--more-->
+
+
+<h2>基于Python Decorator的切面编程</h2>
+
+<p>Python的decorator功能很强大，它能在<font color="red"><strong>运行期间拿到函数的上下文</strong></font>，并且赋予你足够的权限去做很多事情。这恰恰符合面向切面编程的设计方式，你可以通过decorator方便的实现这个功能。</p>
+
+<p>直接上代码：</p>
+
+<p><strong>func_section decorator代码</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def func_section(before_chain=[], after_chain=[]):
+</span><span class='line'>  def func_wrap(func):
+</span><span class='line'>    def wrap(*args, **kwargs):
+</span><span class='line'>      for before_func in before_chain:
+</span><span class='line'>        try:
+</span><span class='line'>          before_func(*args, **kwargs)
+</span><span class='line'>        except Exception:
+</span><span class='line'>          continue
+</span><span class='line'>      res = func(*args, **kwargs)
+</span><span class='line'>
+</span><span class='line'>      for after_func in after_chain:
+</span><span class='line'>        try:
+</span><span class='line'>          after_func(*args, **kwargs)
+</span><span class='line'>        except Exception:
+</span><span class='line'>          continue
+</span><span class='line'>      return res
+</span><span class='line'>    return wrap
+</span><span class='line'>  return func_wrap</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong> 如何使用？</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def example():
+</span><span class='line'>  def before_saying(self):
+</span><span class='line'>    print("I know your name %s" % self.name)
+</span><span class='line'>
+</span><span class='line'>  def before_saving(self):
+</span><span class='line'>    print("I will notify your name %s" % self.name)
+</span><span class='line'>
+</span><span class='line'>  def after_saving(self):
+</span><span class='line'>    print("After saving your name %s " % self.name)
+</span><span class='line'>
+</span><span class='line'>  def done(self):
+</span><span class='line'>    print("Everything is ok %s " % self.name)
+</span><span class='line'>
+</span><span class='line'>  class FuncTest():
+</span><span class='line'>    def __init__(self, name):
+</span><span class='line'>      self.name = name
+</span><span class='line'>
+</span><span class='line'>    def __i_know_you(self):
+</span><span class='line'>      print("I know you guy %s " % self.name)
+</span><span class='line'>
+</span><span class='line'>    @func_section(before_chain=[__i_know_you, before_saying, before_saving],
+</span><span class='line'>      after_chain=[after_saving, done])
+</span><span class='line'>    def save(self):
+</span><span class='line'>      print("Save name %s " % self.name)
+</span><span class='line'>      return self.name
+</span><span class='line'>
+</span><span class='line'>  test = FuncTest(name=u'chenchiyuan')
+</span><span class='line'>  print(test.save())
+</span><span class='line'>
+</span><span class='line'>&gt;&gt;&gt; example()
+</span><span class='line'>I know you guy chenchiyuan 
+</span><span class='line'>I know your name chenchiyuan
+</span><span class='line'>I will notify your name chenchiyuan
+</span><span class='line'>Save name chenchiyuan 
+</span><span class='line'>After saving your name chenchiyuan 
+</span><span class='line'>Everything is ok chenchiyuan 
+</span><span class='line'>chenchiyuan</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>看了这么多，它能干什么？</h2>
+
+<p><font color="red"><strong>它的作用就是减少你的代码的耦合度</strong></font></p>
+
+<p>还不明白？我来举个最简单的例子。</p>
+
+<p>现在有个函数叫做eat()，业务逻辑就是饿了要吃饭，而且已经很多地方调用它了。现在我有个需求，在每次吃饭之前我要吃点开胃菜before_eat()，吃饭之后，我要刷牙洗口after_eat()。怎么实现呢？</p>
+
+<h4>1. 懒人的方法</h4>
+
+<p>管它三七二十一，直接修改eat(), 先加上before_eat(), 再加上after_eat()。</p>
+
+<p>评价：确实完成了功能。但是违反了<a href="http://baike.baidu.com/view/866233.htm">开闭原则</a>，而且函数耦合性很高，如果以后添加了更多需求，这段代码会臃肿不堪，业务逻辑复杂到一定规模的时候，你就祈祷神来解决你吧。</p>
+
+<h4>2. 最笨的方法</h4>
+
+<p>全文搜索，找出所有用到eat()的地方，前面加上before_eat(),后面加上after_eat()。</p>
+
+<p>评价：违反了<a href="http://baike.baidu.com/view/154910.htm#2">封装原则</a>，这一系列操作对外应该是不可见的。我都懒得评价了。。</p>
+
+<h4>3. 优雅的方法</h4>
+
+<p>使用面向切面编程的方法。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def before_eat():
+</span><span class='line'>    print(u'吃开胃菜')
+</span><span class='line'>
+</span><span class='line'>def after_eat():
+</span><span class='line'>    print(u'刷牙')
+</span><span class='line'>
+</span><span class='line'>@func_section(before_chain=[before_eat, ], after_chain=[after_eat, ])
+</span><span class='line'>def eat():
+</span><span class='line'>    print(u'吃饭')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样，以后业务逻辑增加了，只需要将原子的业务逻辑加入函数执行链中即可。体验到它的强大了吧？</p>
+
+<h2>题外话</h2>
+
+<h4>1. Django中有没有类似的方式？</h4>
+
+<p>肯定是有的，最接近的其实是signal的实现。把model.save()比喻成eat(), 那么你可以通过Django自带的before_save, after_save来实现在save的切面前后添加业务逻辑。这样做远远比你重写save方法好得多。</p>
+
+<h4>2. 还有什么注意的东西？</h4>
+
+<p>顺便提提对象的方法实现。instance.do_something(<em>args, **kwargs)。在切面编程拿到的形式是do_something(instance, </em>args, **kwargs)。这其实就是面向对象的最核心的实现技巧。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[数据导出从此无忧:tablib]]></title>
