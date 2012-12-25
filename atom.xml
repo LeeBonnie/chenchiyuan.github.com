@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-25T23:46:58+08:00</updated>
+  <updated>2012-12-26T00:29:25+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sublime的TodoList]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/26/sublimede-todolist/"/>
+    <updated>2012-12-26T00:12:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/26/sublimede-todolist</id>
+    <content type="html"><![CDATA[<h2>睡不着觉, 逛了下github, 发现个货</h2>
+
+<p><a href="https://github.com/aziz/PlainTasks">PlainTasks</a>是一个Sublime的Todo List插件。Cool，虽然我用<a href="http://www.any.do/">Any.do</a>基本解决了我的需求，还是推荐下。</p>
+
+<!--more-->
+
+
+<h2>干啥子的？</h2>
+
+<p>看一张图你就懂了</p>
+
+<p><img src="http://chenchiyuan.github.com/images/photos/sublime_plaintext.png"></p>
+
+<h2>安装</h2>
+
+<p>直接在Package Control里面安装PlainTasks就好了。Control+Shift+p，唤醒交互，输入PlianTasks,点击安装。</p>
+
+<h2>使用</h2>
+
+<p>安装完成之后，Control+Shift+p，唤醒交互，输入tasks。</p>
+
+<h4>1. 新建任务</h4>
+
+<p>command+回车 或者 command+i</p>
+
+<h4>2. 标记完成</h4>
+
+<p>command+d</p>
+
+<h4>3. 标记取消</h4>
+
+<p>command+m</p>
+
+<h4>4. 打包</h4>
+
+<p>command+shift+a</p>
+
+<h4>5. 打标签</h4>
+
+<p>在文本后面添加@标签内容，当你标记完成或者取消的时候，他会自动打上标签。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[面向切面编程(AOP)]]></title>
