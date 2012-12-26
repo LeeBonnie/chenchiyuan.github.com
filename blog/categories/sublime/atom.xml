@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sublime | Shadow]]></title>
   <link href="http://chenchiyuan.github.com/blog/categories/sublime/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-26T23:38:01+08:00</updated>
+  <updated>2012-12-27T00:57:04+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SublimeCodeIntel]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/27/sublimecodeintel/"/>
+    <updated>2012-12-27T00:28:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/27/sublimecodeintel</id>
+    <content type="html"><![CDATA[<h2>这货很强大</h2>
+
+<p><a href="https://github.com/Kronuz/SublimeCodeIntel">SublimeCodeIntel</a>是一个非常强大的代码提示插件, 用上你就会喜欢上他。</p>
+
+<!--more-->
+
+
+<h2>安装</h2>
+
+<p>使用Package Control安装，Command+Shift+p唤醒交互, 输入SublimeCodeIntel安装即可</p>
+
+<h2>使用</h2>
+
+<p>非常类似于Pycharm, Eclipse, Xcode的提示功能。这没什么好说的，自己体会下吧。</p>
+
+<h2>注意事项(Virtualenv的集成)</h2>
+
+<p>使用这货唯一要注意的就是Python环境下的Virtualenv的集成。从<a href="https://github.com/Kronuz/SublimeCodeIntel">说明</a>可以看出，SublimeCodeIntel是通过读取~/.codeintel/config 或者 project_root/.codeintel/config来配置解释器的路径。所以，我们要把Virtualenv的路径加入其中。</p>
+
+<p>在你的项目根路径下创建.codeintel/config文件，开始配置。</p>
+
+<p>我的配置路径: (请配置自己的virtualenvs路径和app)
+```
+{</p>
+
+<pre><code># 注意Python的大小写
+"Python": { 
+    # Python解释器路径
+    "python": "$VIRTUALENVS/APP/bin/python", 
+
+    # 第三方路径
+    "pythonExtraPaths": [
+        "$VIRTUALENVS/APP/lib/python2.7/site-packages", 
+        "$VIRTUALENVS/APP/src"
+    ], 
+}
+</code></pre>
+
+<p>}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sublime之Ctags]]></title>
@@ -409,7 +457,7 @@ ctags -R -f $PROJECT/.tags -a $SRC --languages=Python
 4.  zencoding的体验。
 </code></pre>
 
-<h5>1. 包管理工具(<a href="http://wbond.net/sublime_packages/package_control">Package Control</a>)</h5>
+<h5>1. 包管理工具(<a href="http://wbond.net/sublime_packages/package_control">Package Control</a>(必装)</h5>
 
 <p>这个东西类似于什么呢？ apt-get, brew, pip, npm, yum .....</p>
 
@@ -419,7 +467,7 @@ ctags -R -f $PROJECT/.tags -a $SRC --languages=Python
 
 <p>从此包管理变得简单，command+p 键入install 唤醒Package Control, 你就可以对自己的安装包进行管理了。很方便吧。</p>
 
-<h5>2. Vim跳转</h5>
+<h5>2. Vim跳转(选装)</h5>
 
 <p>经过实验，我觉得Vintage(<a href="https://github.com/sublimehq/Vintage">github</a>)是最合适的Sublime Vim Plugin。</p>
 
@@ -430,7 +478,7 @@ git clone git@github.com:sublimehq/Vintage.git "Vintage Dev"</p></blockquote>
 
 <p>安装之后，你可以通过Esc唤醒Vim模式。是不是突然有种使用Vim的感觉啊~</p>
 
-<h5>3. Ctags跳转 <a href="/blog/2012/12/26/sublimezhi-ctags/">看详细版本吧</a></h5>
+<h5>3. Ctags跳转 <a href="/blog/2012/12/26/sublimezhi-ctags/">看详细版本吧</a>(必装)</h5>
 
 <p>Sublime本身支持一些函数级和文件级的跳转。</p>
 
@@ -446,6 +494,10 @@ git clone git@github.com:sublimehq/Vintage.git "Vintage Dev"</p></blockquote>
 <p>直接在Package Control里安装即可。按照说明，Control+Shift+左键狂点函数名，还是没有跳转过去。。顿时泪流满面。这是为什么了。</p>
 
 <p>仔细研究了下，Ctags的原理其实很简单，他会将索引存放在.tags文件里面，之所以找不到相应的位置，是没有索引住。默认情况下他不会去找virtualenvs下的配置。好吧。感觉这个可以开个另外的博文来详细讲讲----<a href="/blog/2012/12/26/sublimezhi-ctags/">解决方法</a></p>
+
+<h5>4. SublimeCodeIntel(非常优秀的代码提示, 必装)</h5>
+
+<p>直接看我的<a href="/blog/2012/12/27/sublimecodeintel/">博客</a></p>
 ]]></content>
   </entry>
   
