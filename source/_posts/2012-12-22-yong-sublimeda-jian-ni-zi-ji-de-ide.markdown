@@ -43,7 +43,7 @@ Sublime我看中的是他的发展性，github上现在关于Sublime的扩展越
 ## 定制自己的Sublime for Django (持续更新中。。) 
 
 
-#### 我理想中的功能。
+### 我理想中的功能。
 
 
     1.  方便的包管理。 
@@ -52,7 +52,7 @@ Sublime我看中的是他的发展性，github上现在关于Sublime的扩展越
     4.  zencoding的体验。
 
 
-#####  1. 包管理工具([Package Control](http://wbond.net/sublime_packages/package_control))
+####  1. 包管理工具([Package Control](http://wbond.net/sublime_packages/package_control)(必装)
 这个东西类似于什么呢？ apt-get, brew, pip, npm, yum .....
 
 
@@ -63,7 +63,7 @@ Sublime我看中的是他的发展性，github上现在关于Sublime的扩展越
 
 从此包管理变得简单，command+p 键入install 唤醒Package Control, 你就可以对自己的安装包进行管理了。很方便吧。
 
-#####  2. Vim跳转
+####  2. Vim跳转(选装)
 经过实验，我觉得Vintage([github](https://github.com/sublimehq/Vintage))是最合适的Sublime Vim Plugin。
 
 
@@ -75,7 +75,7 @@ git clone git@github.com:sublimehq/Vintage.git "Vintage Dev"
 安装之后，你可以通过Esc唤醒Vim模式。是不是突然有种使用Vim的感觉啊~
 
 
-#####  3. Ctags跳转 [看详细版本吧](/blog/2012/12/26/sublimezhi-ctags/)
+####  3. Ctags跳转 [看详细版本吧](/blog/2012/12/26/sublimezhi-ctags/)(必装)
 Sublime本身支持一些函数级和文件级的跳转。
 
 **文件跳转** Command+p 唤醒交互，输入文件名即可。
@@ -96,3 +96,7 @@ Sublime本身支持一些函数级和文件级的跳转。
 
 
 仔细研究了下，Ctags的原理其实很简单，他会将索引存放在.tags文件里面，之所以找不到相应的位置，是没有索引住。默认情况下他不会去找virtualenvs下的配置。好吧。感觉这个可以开个另外的博文来详细讲讲----[解决方法](/blog/2012/12/26/sublimezhi-ctags/)
+
+
+#### 4. SublimeCodeIntel(非常优秀的代码提示, 必装)
+直接看我的[博客](/blog/2012/12/27/sublimecodeintel/)
