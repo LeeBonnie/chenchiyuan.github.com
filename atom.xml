@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-26T00:29:25+08:00</updated>
+  <updated>2012-12-26T23:31:52+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -12,6 +12,320 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sublime之Ctags]]></title>
+    <link href="http://chenchiyuan.github.com/blog/2012/12/26/sublimezhi-ctags/"/>
+    <updated>2012-12-26T21:32:00+08:00</updated>
+    <id>http://chenchiyuan.github.com/blog/2012/12/26/sublimezhi-ctags</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>之前在博客里埋了一个坑，如何使用Ctags实现类似于Pycharm的点击跳转到定义处的功能。这个功能强大之处在于，你可以方便的寻找到源码，看它的注释，分析他的代码，这非常有助于你了解作者的逻辑，同时，也能展现给你优秀程序员的代码之美。</p>
+
+<h2>怎么实现？</h2>
+
+<p>为了方便那些只求答案的同学，我将实现方式贴在下面。</p>
+
+<p>假设你需要建立索引的源头有两个。</p>
+
+<h4>1. 你的当前项目路径$PROJECT</h4>
+
+<h4>2. 你的Python源码以及第三方的根路径$SRC</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1. ctags -R -f $PROJECT/.tags $PROJECT --languages=Python
+</span><span class='line'>2. ctags -R -f $PROJECT/.tags -a $SRC --languages=Python</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以后每需要新增一个目录，都可以通过以下命令来实现</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags -R -f $PROJECT/.tags - a $DIR --languages=Python</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然它可以从某个文件中读取相应的目录列表，我的需求目录只有两个，就没这样写配置。</p>
+
+<h2>Ctags的介绍</h2>
+
+<p>ctags用官方的解释就是产生标记文件，帮助在文件中定位对象。其实就是你可以找到一个对象的定义处。</p>
+
+<h4>实现原理</h4>
+
+<p>Ctags会将定义的对象索引化，记录他的出处。用Python伪代码来形容下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    'a': [path_a, path_b],
+</span><span class='line'>    'b': [path_c, ]
+</span><span class='line'>    ...
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每当找到一个需要定义对象的时候，他都会在HashTable里面增加对象地址的记录。这样，以后扫元素的时候，它可以从列表中读出相应的位置，点击完成跳转。<font color="red">(个人理解，他的实现肯定更加严谨高效)</font></p>
+
+<h4>读读参数表</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags --help
+</span><span class='line'>Usage: ctags [options] [file(s)]
+</span><span class='line'>
+</span><span class='line'>  -a   Append the tags to an existing tag file.
+</span><span class='line'>  -B   Use backward searching patterns (?...?).
+</span><span class='line'>  -e   Output tag file for use with Emacs.
+</span><span class='line'>  -f &lt;name&gt;
+</span><span class='line'>       Write tags to specified file. Value of "-" writes tags to stdout
+</span><span class='line'>       ["tags"; or "TAGS" when -e supplied].
+</span><span class='line'>  -F   Use forward searching patterns (/.../) (default).
+</span><span class='line'>  -h &lt;list&gt;
+</span><span class='line'>       Specify list of file extensions to be treated as include files.
+</span><span class='line'>       [".h.H.hh.hpp.hxx.h++"].
+</span><span class='line'>  -I &lt;list|@file&gt;
+</span><span class='line'>       A list of tokens to be specially handled is read from either the
+</span><span class='line'>       command line or the specified file.
+</span><span class='line'>  -L &lt;file&gt;
+</span><span class='line'>       A list of source file names are read from the specified file.
+</span><span class='line'>       If specified as "-", then standard input is read.
+</span><span class='line'>  -n   Equivalent to --excmd=number.
+</span><span class='line'>  -N   Equivalent to --excmd=pattern.
+</span><span class='line'>  -o   Alternative for -f.
+</span><span class='line'>  -R   Equivalent to --recurse.
+</span><span class='line'>  -u   Equivalent to --sort=no.
+</span><span class='line'>  -V   Equivalent to --verbose.
+</span><span class='line'>  -x   Print a tabular cross reference file to standard output.
+</span><span class='line'>  --append=[yes|no]
+</span><span class='line'>       Should tags should be appended to existing tag file [no]?
+</span><span class='line'>  --etags-include=file
+</span><span class='line'>      Include reference to 'file' in Emacs-style tag file (requires -e).
+</span><span class='line'>  --exclude=pattern
+</span><span class='line'>      Exclude files and directories matching 'pattern'.
+</span><span class='line'>  --excmd=number|pattern|mix
+</span><span class='line'>       Uses the specified type of EX command to locate tags [pattern].
+</span><span class='line'>  --extra=[+|-]flags
+</span><span class='line'>      Include extra tag entries for selected information (flags: "fq").
+</span><span class='line'>  --fields=[+|-]flags
+</span><span class='line'>      Include selected extension fields (flags: "afmikKlnsStz") [fks].
+</span><span class='line'>  --file-scope=[yes|no]
+</span><span class='line'>       Should tags scoped only for a single file (e.g. "static" tags
+</span><span class='line'>       be included in the output [yes]?
+</span><span class='line'>  --filter=[yes|no]
+</span><span class='line'>       Behave as a filter, reading file names from standard input and
+</span><span class='line'>       writing tags to standard output [no].
+</span><span class='line'>  --filter-terminator=string
+</span><span class='line'>       Specify string to print to stdout following the tags for each file
+</span><span class='line'>       parsed when --filter is enabled.
+</span><span class='line'>  --format=level
+</span><span class='line'>       Force output of specified tag file format [2].
+</span><span class='line'>  --help
+</span><span class='line'>       Print this option summary.
+</span><span class='line'>  --if0=[yes|no]
+</span><span class='line'>       Should C code within #if 0 conditional branches be parsed [no]?
+</span><span class='line'>  --&lt;LANG&gt;-kinds=[+|-]kinds
+</span><span class='line'>       Enable/disable tag kinds for language &lt;LANG&gt;.
+</span><span class='line'>  --langdef=name
+</span><span class='line'>       Define a new language to be parsed with regular expressions.
+</span><span class='line'>  --langmap=map(s)
+</span><span class='line'>       Override default mapping of language to source file extension.
+</span><span class='line'>  --language-force=language
+</span><span class='line'>       Force all files to be interpreted using specified language.
+</span><span class='line'>  --languages=[+|-]list
+</span><span class='line'>       Restrict files scanned for tags to those mapped to langauges
+</span><span class='line'>       specified in the comma-separated 'list'. The list can contain any
+</span><span class='line'>       built-in or user-defined language [all].
+</span><span class='line'>  --license
+</span><span class='line'>       Print details of software license.
+</span><span class='line'>  --line-directives=[yes|no]
+</span><span class='line'>       Should #line directives be processed [no]?
+</span><span class='line'>  --links=[yes|no]
+</span><span class='line'>       Indicate whether symbolic links should be followed [yes].
+</span><span class='line'>  --list-kinds=[language|all]
+</span><span class='line'>       Output a list of all tag kinds for specified language or all.
+</span><span class='line'>  --list-languages
+</span><span class='line'>       Output list of supported languages.
+</span><span class='line'>  --list-maps=[language|all]
+</span><span class='line'>       Output list of language mappings.
+</span><span class='line'>  --options=file
+</span><span class='line'>       Specify file from which command line options should be read.
+</span><span class='line'>  --recurse=[yes|no]
+</span><span class='line'>       Recurse into directories supplied on command line [no].
+</span><span class='line'>  --regex-&lt;LANG&gt;=/line_pattern/name_pattern/[flags]
+</span><span class='line'>       Define regular expression for locating tags in specific language.
+</span><span class='line'>  --sort=[yes|no|foldcase]
+</span><span class='line'>       Should tags be sorted (optionally ignoring case) [yes]?.
+</span><span class='line'>  --tag-relative=[yes|no]
+</span><span class='line'>       Should paths be relative to location of tag file [no; yes when -e]?
+</span><span class='line'>  --totals=[yes|no]
+</span><span class='line'>       Print statistics about source and tag files [no].
+</span><span class='line'>  --verbose=[yes|no]
+</span><span class='line'>       Enable verbose messages describing actions on each source file.
+</span><span class='line'>  --version
+</span><span class='line'>       Print version identifier to standard output.</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>我知道你懒得看，我来讲讲几个重要的</h2>
+
+<h4>1. Ctags能识别哪些语言呢？</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags --list-languages
+</span><span class='line'>一堆，自己看看。主流的基本都有了。</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2. 语言它会找相应的文件</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags --list-maps
+</span><span class='line'>Python   *.py *.pyx *.pxd *.pxi *.scons # 以Python为例子</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3. Python它会识别什么语言元素？</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags --list-kinds=Python
+</span><span class='line'>c  classes
+</span><span class='line'>f  functions
+</span><span class='line'>m  class members
+</span><span class='line'>v  variables
+</span><span class='line'>i  imports</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可见，它会将类，函数，成员，变量和引入作为元素来生成索引。所以在Sublime里面你点击文件或者模块，他是不会跳转到相应的位置的(稍后研究下怎么解决)。</p>
+
+<h4>4. 之前介绍命令的含义</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-R 递归的寻找目录的子目录
+</span><span class='line'>-f 将索引写入指定文件，Sublime的插件Ctags读的是**当前视图的.tags文件**。
+</span><span class='line'>-a 追加索引
+</span><span class='line'>--languages 选择语言解释器</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所以之前两句的解释是这样</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags -R -f $PROJECT/.tags $PROJECT --languages=Python </span></code></pre></td></tr></table></div></figure>
+
+
+<p>递归的将项目目录的文件使用Python解释器建立索引写入项目目录的.tags文件中</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags -R -f $PROJECT/.tags -a $SRC --languages=Python</span></code></pre></td></tr></table></div></figure>
+
+
+<p>递归的将SRC目录的文件使用Python解释器建立索引追加到项目目录的.tags文件中
+之后Sublime的插件Ctags会读取当前试图下的.tags文件，完成点击跳转的功能。</p>
+
+<h4>5. 还不懂或者没解决问题？</h4>
+
+<p>自己Google吧，答案就在其中。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sublime的TodoList]]></title>
@@ -396,12 +710,9 @@
 
 <p>开发Django已经有好几年了，想了想，中途使用的IDE还真是很多。使用比较长时间的莫过于Vim和Pycharm，为什么突然想使用Sublime来作为今后的主流IDE呢？不妨来对比下一下IDE的区别。</p>
 
-<!--more-->
-
-
 <h4>Pycharm</h4>
 
-<p>优点：说实话，Pycharm是我目前为止觉得最适合Django的IDE(基本就是Eclipse, Java党的专属神器)，最突出的功能在于他的索引查找和代码提示。这两个功能是写编程时使用最频繁的，Pycharm可以说是做到了一个极致。更别说他还支持断点调试，这会使得你开发时得心应手。</p>
+<p>优点：说实话，Pycharm是我目前为止觉得最适合Django的IDE，最突出的功能在于他的索引查找和代码提示。</p>
 
 <p>缺点：吃内存，这个就不多说了，用的人都懂。</p>
 
@@ -411,11 +722,11 @@
 
 <p>优点：非常舒服的快捷键设置，熟悉之后，能极大的提高工作效率。Bundle的管理也注定他能扩展很多非常优秀的功能。而且，在服务器上你也只能选择那么几个编辑器，Vim绝对是其中的佼佼者。</p>
 
-<p>缺点：我不是骨灰级的Coder，所以骨子里不是很迷恋Vim和Emacs。如果哪天兴致来了想写下相应的扩展，Oh 天啦，还要学一堆东西，而这些东西只是现有知识的横向扩充，还是不花这功夫吧。</p>
+<p>缺点：我不是骨灰级的Coder，所以骨子里不是很喜欢Vim和Emacs。如果哪天兴致来了想写下相应的扩展，Oh 天啦，还要学一堆东西，还是算了吧。。</p>
 
 <h4>最后说说Sublime</h4>
 
-<p><strong>Sublime我看中的是他的发展性</strong>。一个优秀的项目，需要的是大批忠实开发者的支持。github上现在关于Sublime的扩展越来越多，没有多久，Pycharm和Vim的优点他都能集成进来。而且，他的扩展使用python开发，我技痒的时候，也可以玩玩。能定制自己的IDE，绝对很酷。</p>
+<p>Sublime我看中的是他的发展性，github上现在关于Sublime的扩展越来越多，没有多久，Pycharm和Vim的优点他都能集成进来。而且，他的扩展使用python开发，我技痒的时候，也可以玩玩。能定制自己的IDE，绝对很幸福。</p>
 
 <h2>定制自己的Sublime for Django (持续更新中。。)</h2>
 
@@ -433,27 +744,22 @@
 
 <p>在sublime中通过组合键ctrl+~ 唤醒Python，然后输入</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print 'Please restart Sublime Text to finish installation'</span></code></pre></td></tr></table></div></figure>
-
+<blockquote><p>import urllib2,os; pf=&#8217;Package Control.sublime-package&#8217;; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),&#8217;wb&#8217;).write(urllib2.urlopen(&#8216;http://sublime.wbond.net/&#8217;+pf.replace(&#8217; &#8216;,&#8217;%20&#8217;)).read()); print &#8216;Please restart Sublime Text to finish installation&#8217;</p></blockquote>
 
 <p>从此包管理变得简单，command+p 键入install 唤醒Package Control, 你就可以对自己的安装包进行管理了。很方便吧。</p>
 
 <h5>2. Vim跳转</h5>
 
-<p>经过实验，我觉得Vintage(<a href="https://github.com/sublimehq/Vintage">github</a>)是最适合的Sublime Vim Plugin。</p>
+<p>经过实验，我觉得Vintage(<a href="https://github.com/sublimehq/Vintage">github</a>)是最合适的Sublime Vim Plugin。</p>
 
 <p>安装方法如下：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
-</span><span class='line'>git clone git@github.com:sublimehq/Vintage.git "Vintage Dev"</span></code></pre></td></tr></table></div></figure>
+<blockquote><p>cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
+git clone git@github.com:sublimehq/Vintage.git &#8220;Vintage Dev&#8221;</p></blockquote>
 
+<p>安装之后，你可以通过Esc唤醒Vim模式。是不是突然有种使用Vim的感觉啊~</p>
 
-<p>安装之后，你可以通过Esc唤醒Vim模式。是不是突然有种使用Vim的感觉~</p>
-
-<h5>3. Ctags跳转(完善中，之后会单开文章说明)</h5>
+<h5>3. Ctags跳转 <a href="http://chenchiyuan.github.com/blog/2012/12/26/sublimezhi-ctags/">看详细版本吧</a></h5>
 
 <p>Sublime本身支持一些函数级和文件级的跳转。</p>
 
@@ -468,34 +774,7 @@
 
 <p>直接在Package Control里安装即可。按照说明，Control+Shift+左键狂点函数名，还是没有跳转过去。。顿时泪流满面。这是为什么了。</p>
 
-<p>仔细研究了下，Ctags的原理其实很简单，他会将索引存放在.tags文件里面，之所以找不到相应的位置，是没有索引住。默认情况下他不会去找virtualenvs下的配置。好吧。感觉这个可以开个另外的博文来详细讲讲，现在只说下解决方法。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ctags -R -f ~/.tags $VIRTUALENVS/$PROJECT</span></code></pre></td></tr></table></div></figure>
-
-
-<p>递归的将virtualenv下的project目录建立索引。</p>
-
-<h4>4. Zencoding是编写前端代码的最优雅方式</h4>
-
-<p>现在Zencoding改名为Emmet。只需要用Packages Control安装Emmet即可。</p>
-
-<p>安装之后，咱们先体验下。</p>
-
-<pre><code>ul#nav&gt;li.items$*4&gt;a{Item $}
-</code></pre>
-
-<p>输入以上字符窜，按下Tab。</p>
-
-<pre><code>&lt;ul id="nav"&gt;
-    &lt;li class="items1"&gt;&lt;a href=""&gt;Item 1&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="items2"&gt;&lt;a href=""&gt;Item 2&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="items3"&gt;&lt;a href=""&gt;Item 3&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="items4"&gt;&lt;a href=""&gt;Item 4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-
-<p>是不是很优美很高效？更多效果请参见<a href="http://docs.emmet.io/">emmet官网</a></p>
+<p>仔细研究了下，Ctags的原理其实很简单，他会将索引存放在.tags文件里面，之所以找不到相应的位置，是没有索引住。默认情况下他不会去找virtualenvs下的配置。好吧。感觉这个可以开个另外的博文来详细讲讲&#8212;-<a href="http://chenchiyuan.github.com/blog/2012/12/26/sublimezhi-ctags/">解决方法</a></p>
 ]]></content>
   </entry>
   
