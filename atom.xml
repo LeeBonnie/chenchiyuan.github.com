@@ -4,7 +4,7 @@
   <title><![CDATA[Shadow]]></title>
   <link href="http://chenchiyuan.github.com/atom.xml" rel="self"/>
   <link href="http://chenchiyuan.github.com/"/>
-  <updated>2012-12-26T23:33:20+08:00</updated>
+  <updated>2012-12-26T23:35:16+08:00</updated>
   <id>http://chenchiyuan.github.com/</id>
   <author>
     <name><![CDATA[陈驰远]]></name>
@@ -712,6 +712,9 @@
     <content type="html"><![CDATA[<h2>为什么使用Sublime?</h2>
 
 <p>开发Django已经有好几年了，想了想，中途使用的IDE还真是很多。使用比较长时间的莫过于Vim和Pycharm，为什么突然想使用Sublime来作为今后的主流IDE呢？不妨来对比下一下IDE的区别。</p>
+
+<!--more-->
+
 
 <h4>Pycharm</h4>
 
